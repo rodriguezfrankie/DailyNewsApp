@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
-            // TODO: make a request to the URL
+            //make a request to the URL
             String url = "https://content.guardianapis.com/search?q=debate&tag=politics&from-date=2018-01-01&api-key=test";
-            String jsonString = "";
+            String jsonString;
             try {
                 jsonString = sh.makeHttpRequest(createUrl(url));
             } catch (IOException e) {
@@ -56,15 +56,18 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Response from url: " + jsonString);
             if (jsonString != null) {
                 try {
-                    //TODO: Create a new JSONObject
+                    //Create a new JSONObject
                     JSONObject jsonObj = new JSONObject(jsonString);
 
-                    // TODO: Get the JSON Array node
-                    JSONArray results = jsonObj.getJSONArray("results");
+                    //get the JSON Object response
+                    JSONObject response = jsonObj.getJSONObject("response");
+
+                    //Get the JSON Array node
+                    JSONArray results = response.getJSONArray("results");
 
                     // looping through all Contacts
                     for (int i = 0; i < results.length(); i++) {
-                        //TODO: get the JSONObject
+                        //get the JSONObject
                         JSONObject c = results.getJSONObject(i);
                         String section = c.getString("sectionName");
                         String title = c.getString("webTitle");
